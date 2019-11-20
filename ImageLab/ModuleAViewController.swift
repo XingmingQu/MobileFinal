@@ -7,23 +7,38 @@
 //
 
 import UIKit
+let SERVER_URL = "10.8.105.53"
 
-class ModuleAViewController: UIViewController {
+
+class ModuleAViewController: UIViewController,UINavigationControllerDelegate,UITextFieldDelegate,URLSessionDelegate  {
     
     //MARK: Class Properties
-    var filters : [CIFilter]! = nil
+    
     var videoManager:VideoAnalgesic! = nil
     var detector:CIDetector! = nil
-
     var blinkTimes = 0
     let bridge = OpenCVBridge()
-    var eyeMouthFilter=0
+    let mytool = tools()
+    let operationQueue = OperationQueue()
+    var session = URLSession()
+    var timer : Timer?
+    @IBOutlet weak var resultLabel: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let sessionConfig = URLSessionConfiguration.ephemeral
+        
+        sessionConfig.timeoutIntervalForRequest = 25.0
+        sessionConfig.timeoutIntervalForResource = 28.0
+        sessionConfig.httpMaximumConnectionsPerHost = 1
+        
+        self.session = URLSession(configuration: sessionConfig,
+            delegate: self,
+            delegateQueue:self.operationQueue)
         
         self.view.backgroundColor = nil
-
+        
         self.videoManager = VideoAnalgesic.sharedInstance
         self.videoManager.setCameraPosition(position: AVCaptureDevice.Position.front)
         
@@ -43,8 +58,9 @@ class ModuleAViewController: UIViewController {
         if !videoManager.isRunning{
             videoManager.start()
         }
+        
 
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,77 +70,178 @@ class ModuleAViewController: UIViewController {
         if !videoManager.isRunning{
             videoManager.start()
         }
+        
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+          
+                let randomNumber = Int.random(in: 1...20)
+                print("Number: \(randomNumber)")
+                
+                let frame = self.videoManager.currentFrame!
+                let currentImage = UIImage(ciImage: frame)
+                let _ = self.sendFeatures(currentImage)
+
+              if (self.blinkTimes > 2){
+                //update DB
+                self.blinkTimes = 0
+            }
+        }
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+                if videoManager.isRunning{
+            videoManager.stop()
+        }
+        
+        
+        if self.timer != nil {
+            self.timer?.invalidate()
+            self.timer = nil
+        }
     }
     
     
     //MARK: Process image output
+    
     func processImage(inputImage:CIImage) -> CIImage{
-        
+        print(self.blinkTimes)
         // --------detect faces and high light-----------------------
         let f = getFaces(img: inputImage)
         // if no faces, just return original image
         if f.count == 0 { return inputImage }
         var retImage = inputImage
         
-        DispatchQueue.global(qos: .background).async {
-          Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-              let randomNumber = Int.random(in: 1...20)
-              print("Number: \(randomNumber)")
-
-          }
-        }
         //Highlights multiple faces in the scene using CoreImage filters
         for faces in f {
             self.bridge.setImage(retImage, withBounds: faces.bounds, andContext: self.videoManager.getCIContext())
-            //High light faces
-            self.bridge.processImage()
+
             
             //-------------display if the user is smiling or blinking (and with which eye)------------
             if(faces.hasSmile){
-                self.bridge.addText("Smile", atY: 10)
+                print("Smile")
             }else{
-                self.bridge.addText("Not Smile", atY: 10)
+                print("Not Smile")
             }
             
             if(faces.leftEyeClosed){
-                self.bridge.addText("leftEyeClosed", atY: 20)
+                print("leftEyeClosed")
             }else{
-                self.bridge.addText("leftEyeOpen", atY: 20)
+                print("leftEyeOpen")
             }
             
             if(faces.rightEyeClosed){
-                self.bridge.addText("rightEyeClosed", atY: 30)
+                print("rightEyeClosed")
             }else{
-                self.bridge.addText("rightEyeOpen", atY: 30)
+                print("rightEyeOpen")
             }
             
             if (faces.leftEyeClosed && faces.rightEyeClosed){
-                self.bridge.addText("BothClosed", atY: 40)
+                print("BothClosed")
+                self.blinkTimes = self.blinkTimes + 1
+                
             }
-            //-------------display if the user is smiling or blinking (and with which eye)------------
-            
-            retImage = self.bridge.getImageComposite()
-
-            
+           
         }
         //------------------------------------------------------
-        
-        
-        
         return retImage
     }
-        
+    
     func getFaces(img:CIImage) -> [CIFaceFeature]{
         // this ungodly mess makes sure the image is the correct orientation
-        let optsFace = [CIDetectorImageOrientation:self.videoManager.ciOrientation,CIDetectorSmile:true, CIDetectorEyeBlink:true] as [String : Any]
+        let optsFace = [CIDetectorAccuracy:CIDetectorAccuracyHigh, CIDetectorImageOrientation:self.videoManager.ciOrientation,CIDetectorSmile:true, CIDetectorEyeBlink:true] as [String : Any]
         // get Face Features
         return self.detector.features(in: img, options: optsFace) as! [CIFaceFeature]
         
     }
-        
+    
     @IBAction func switchCamera(_ sender: UIButton) {
         self.videoManager.toggleCameraPosition()
     }
     
+    //MARK: Comm with Server
+    func sendFeatures(_ image:UIImage) -> (Int){
+        let targetURL = "http://\(SERVER_URL):8000"
+        let baseURL = "\(targetURL)/PredictOne"
+        let postUrl = URL(string: "\(baseURL)")
+        
+        // create a custom HTTP POST request
+        var request = URLRequest(url: postUrl!)
+        
+        // data to send in body of post request (send arguments as json)
+        
+        let targetSize = CGSize(width: 300, height: 400)
+
+//        let newCgIm = image.cgImage!.copy()
+//        let newImage = UIImage(cgImage: newCgIm!, scale: image.scale, orientation: .right)
+        let rotatedImage = image.rotate(radians: .pi/2)
+
+        let resizedImg = self.mytool.resize(image: rotatedImage, targetSize: targetSize)
+
+//
+        
+        let jpegData = UIImageJPEGRepresentation(resizedImg, 1.0)
+        let encodedString = jpegData?.base64EncodedString()
+//        print(image.size.width)
+        let jsonUpload:NSDictionary = ["feature":encodedString!,
+                                       ]
+        
+        let requestBody:Data? = self.mytool.convertDictionaryToData(with:jsonUpload)
+        
+        request.httpMethod = "POST"
+        request.httpBody = requestBody
+
+        let postTask : URLSessionDataTask = self.session.dataTask(with: request,
+            completionHandler:{(data, response, error) in
+                if(error != nil){
+                    if let res = response{
+                        print("Response:\n",res)
+                    }
+                }
+                else{
+                    let jsonDictionary = self.mytool.convertDataToDictionary(with: data)
+//                    print(jsonDictionary["feature"]!)
+                    print(jsonDictionary["prediction"]!)
+                    print(jsonDictionary["RFprediction"]!)
+                    print(jsonDictionary["name"]!)
+                    let labelResponse = jsonDictionary["prediction"]!
+//                        let RFlabelResponse = jsonDictionary["RFprediction"]!
+//                        let RF_est_number = jsonDictionary["RF_est_number"]!
+                    DispatchQueue.main.async{
+                        // update label when set
+                        let strResult = labelResponse as? String
+                        self.resultLabel.text = "SVM: \(strResult!)"
+                    }
+                }
+        })
+        
+        postTask.resume() // start the task
+
+        return 0
+    }
+
     
+}
+
+
+extension UIImage {
+    func rotate(radians: CGFloat) -> UIImage {
+        let rotatedSize = CGRect(origin: .zero, size: size)
+            .applying(CGAffineTransform(rotationAngle: CGFloat(radians)))
+            .integral.size
+        UIGraphicsBeginImageContext(rotatedSize)
+        if let context = UIGraphicsGetCurrentContext() {
+            let origin = CGPoint(x: rotatedSize.width / 2.0,
+                                 y: rotatedSize.height / 2.0)
+            context.translateBy(x: origin.x, y: origin.y)
+            context.rotate(by: radians)
+            draw(in: CGRect(x: -origin.y, y: -origin.x,
+                            width: size.width, height: size.height))
+            let rotatedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+
+            return rotatedImage ?? self
+        }
+
+        return self
+    }
 }

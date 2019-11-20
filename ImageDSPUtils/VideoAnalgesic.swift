@@ -21,6 +21,7 @@ class VideoAnalgesic: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, AV
     private var window:UIWindow??
     var videoPreviewView:GLKView
     var ciOrientation = 1
+    var currentFrame:CIImage? = nil;
     private var _eaglContext:EAGLContext!
     private var ciContext:CIContext!
     private var videoPreviewViewBounds:CGRect = CGRect.zero
@@ -431,6 +432,7 @@ class VideoAnalgesic: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, AV
                 
                 if (filteredImage != nil){
                     self.ciContext.draw(filteredImage, in:self.videoPreviewViewBounds, from:drawRect)
+                    self.currentFrame = filteredImage
                 }
                 
                 self.videoPreviewView.display()
@@ -438,6 +440,7 @@ class VideoAnalgesic: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, AV
         }
         
     }
+    
     
     func toggleFlash()->(Bool){
         var isOn = false

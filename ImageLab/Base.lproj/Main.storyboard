@@ -31,21 +31,28 @@
                                     <action selector="switchCamera:" destination="gBJ-Ga-IQM" eventType="touchUpInside" id="bcF-Br-29i"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="THe-KN-YCR">
-                                <rect key="frame" x="186" y="687" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="THe-KN-YCR">
+                                <rect key="frame" x="50" y="734.5" width="314" height="27.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <color key="textColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="THe-KN-YCR" firstAttribute="leading" secondItem="7aw-bQ-5L4" secondAttribute="leadingMargin" constant="30" id="9qC-RE-EVq"/>
                             <constraint firstItem="xm2-cv-eW6" firstAttribute="top" secondItem="rjB-ia-1KY" secondAttribute="bottom" id="FuA-zy-pgR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="THe-KN-YCR" secondAttribute="trailing" constant="30" id="GCh-RF-MFh"/>
+                            <constraint firstItem="52m-1W-Y1T" firstAttribute="top" secondItem="THe-KN-YCR" secondAttribute="bottom" constant="51" id="HXC-gm-uVp"/>
                             <constraint firstItem="xm2-cv-eW6" firstAttribute="leading" secondItem="7aw-bQ-5L4" secondAttribute="leadingMargin" id="lgi-g2-fzE"/>
+                            <constraint firstItem="THe-KN-YCR" firstAttribute="centerX" secondItem="7aw-bQ-5L4" secondAttribute="centerX" id="xd5-DS-kyc"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="ModuleA" id="R6k-X3-ieb"/>
+                    <connections>
+                        <outlet property="resultLabel" destination="THe-KN-YCR" id="cx8-1w-GtJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BuC-GW-OX3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
