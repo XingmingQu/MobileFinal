@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		454AA8E6238060200038BBC9 /* ModuleAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454AA8E5238060200038BBC9 /* ModuleAViewController.swift */; };
 		454AA8E82381919C0038BBC9 /* tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454AA8E72381919C0038BBC9 /* tools.swift */; };
-		454AA8EA2381A4BA0038BBC9 /* facecopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454AA8E92381A4B90038BBC9 /* facecopy.swift */; };
+		454AA8EC2385A37D0038BBC9 /* CheckListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454AA8EB2385A37D0038BBC9 /* CheckListViewController.swift */; };
 		B650B31B1D8340F0000114A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650B31A1D8340F0000114A1 /* AppDelegate.swift */; };
 		B650B31D1D8340F0000114A1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650B31C1D8340F0000114A1 /* ViewController.swift */; };
 		B650B3201D8340F0000114A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B650B31E1D8340F0000114A1 /* Main.storyboard */; };
@@ -17,7 +17,6 @@
 		B650B3251D8340F0000114A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B650B3231D8340F0000114A1 /* LaunchScreen.storyboard */; };
 		B650B3301D8340F0000114A1 /* ImageLabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650B32F1D8340F0000114A1 /* ImageLabTests.swift */; };
 		B650B33B1D8340F0000114A1 /* ImageLabUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650B33A1D8340F0000114A1 /* ImageLabUITests.swift */; };
-		B650B34E1D834D46000114A1 /* smu-campus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B650B34D1D834D46000114A1 /* smu-campus.jpg */; };
 		B67B72BB1D996ADE008EDDE1 /* OpenCVBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = B67B72BA1D996ADE008EDDE1 /* OpenCVBridge.mm */; };
 		B6E657991D95AA4500E75C60 /* VideoAnalgesic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E657981D95AA4500E75C60 /* VideoAnalgesic.swift */; };
 		B6EF2FD71F7A1C2900C33387 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6EF2FD51F7A1BE500C33387 /* opencv2.framework */; };
@@ -43,7 +42,7 @@
 /* Begin PBXFileReference section */
 		454AA8E5238060200038BBC9 /* ModuleAViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleAViewController.swift; sourceTree = "<group>"; };
 		454AA8E72381919C0038BBC9 /* tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tools.swift; sourceTree = "<group>"; };
-		454AA8E92381A4B90038BBC9 /* facecopy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = facecopy.swift; sourceTree = "<group>"; };
+		454AA8EB2385A37D0038BBC9 /* CheckListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListViewController.swift; sourceTree = "<group>"; };
 		B650B3171D8340F0000114A1 /* ImageLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B650B31A1D8340F0000114A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B650B31C1D8340F0000114A1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -57,7 +56,6 @@
 		B650B3361D8340F0000114A1 /* ImageLabUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageLabUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B650B33A1D8340F0000114A1 /* ImageLabUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLabUITests.swift; sourceTree = "<group>"; };
 		B650B33C1D8340F0000114A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B650B34D1D834D46000114A1 /* smu-campus.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "smu-campus.jpg"; sourceTree = "<group>"; };
 		B67B72B81D996ADC008EDDE1 /* ImageLab-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ImageLab-Bridging-Header.h"; sourceTree = "<group>"; };
 		B67B72B91D996ADE008EDDE1 /* OpenCVBridge.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = OpenCVBridge.hh; path = ImageDSPUtils/OpenCVBridge.hh; sourceTree = SOURCE_ROOT; };
 		B67B72BA1D996ADE008EDDE1 /* OpenCVBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = OpenCVBridge.mm; path = ImageDSPUtils/OpenCVBridge.mm; sourceTree = SOURCE_ROOT; };
@@ -119,14 +117,13 @@
 			children = (
 				454AA8E72381919C0038BBC9 /* tools.swift */,
 				B650B31A1D8340F0000114A1 /* AppDelegate.swift */,
-				454AA8E92381A4B90038BBC9 /* facecopy.swift */,
 				454AA8E5238060200038BBC9 /* ModuleAViewController.swift */,
+				454AA8EB2385A37D0038BBC9 /* CheckListViewController.swift */,
 				B650B31C1D8340F0000114A1 /* ViewController.swift */,
 				B650B31E1D8340F0000114A1 /* Main.storyboard */,
 				B650B3211D8340F0000114A1 /* Assets.xcassets */,
 				B650B3231D8340F0000114A1 /* LaunchScreen.storyboard */,
 				B650B3261D8340F0000114A1 /* Info.plist */,
-				B650B34D1D834D46000114A1 /* smu-campus.jpg */,
 				B6EF2FD81F7A1CE100C33387 /* PrefixHeader.pch */,
 			);
 			path = ImageLab;
@@ -276,7 +273,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B650B34E1D834D46000114A1 /* smu-campus.jpg in Resources */,
 				B650B3251D8340F0000114A1 /* LaunchScreen.storyboard in Resources */,
 				B650B3221D8340F0000114A1 /* Assets.xcassets in Resources */,
 				B650B3201D8340F0000114A1 /* Main.storyboard in Resources */,
@@ -304,13 +300,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				454AA8EC2385A37D0038BBC9 /* CheckListViewController.swift in Sources */,
 				454AA8E6238060200038BBC9 /* ModuleAViewController.swift in Sources */,
 				B6E657991D95AA4500E75C60 /* VideoAnalgesic.swift in Sources */,
 				B650B31D1D8340F0000114A1 /* ViewController.swift in Sources */,
 				454AA8E82381919C0038BBC9 /* tools.swift in Sources */,
 				B650B31B1D8340F0000114A1 /* AppDelegate.swift in Sources */,
 				B67B72BB1D996ADE008EDDE1 /* OpenCVBridge.mm in Sources */,
-				454AA8EA2381A4BA0038BBC9 /* facecopy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

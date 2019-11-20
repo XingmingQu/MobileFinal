@@ -8,8 +8,10 @@
 
 import UIKit
 
+let SERVER_URL = "10.8.105.53"
+
 class tools: NSObject {
-    
+    let globalServerURL = SERVER_URL
     //https://gist.github.com/marcosgriselli/00ab6c68f48ccaeb110afc82786767ec
     func resize(image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size

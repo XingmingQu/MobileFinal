@@ -7,7 +7,7 @@
 //
 
 import UIKit
-let SERVER_URL = "10.8.105.53"
+
 
 
 class ModuleAViewController: UIViewController,UINavigationControllerDelegate,UITextFieldDelegate,URLSessionDelegate  {
@@ -22,6 +22,7 @@ class ModuleAViewController: UIViewController,UINavigationControllerDelegate,UIT
     let operationQueue = OperationQueue()
     var session = URLSession()
     var timer : Timer?
+    
     @IBOutlet weak var resultLabel: UILabel!
     
     
@@ -104,7 +105,7 @@ class ModuleAViewController: UIViewController,UINavigationControllerDelegate,UIT
     //MARK: Process image output
     
     func processImage(inputImage:CIImage) -> CIImage{
-        print(self.blinkTimes)
+//        print(self.blinkTimes)
         // --------detect faces and high light-----------------------
         let f = getFaces(img: inputImage)
         // if no faces, just return original image
@@ -138,9 +139,7 @@ class ModuleAViewController: UIViewController,UINavigationControllerDelegate,UIT
             if (faces.leftEyeClosed && faces.rightEyeClosed){
                 print("BothClosed")
                 self.blinkTimes = self.blinkTimes + 1
-                
             }
-           
         }
         //------------------------------------------------------
         return retImage
@@ -160,6 +159,8 @@ class ModuleAViewController: UIViewController,UINavigationControllerDelegate,UIT
     
     //MARK: Comm with Server
     func sendFeatures(_ image:UIImage) -> (Int){
+        
+        let SERVER_URL = self.mytool.globalServerURL
         let targetURL = "http://\(SERVER_URL):8000"
         let baseURL = "\(targetURL)/PredictOne"
         let postUrl = URL(string: "\(baseURL)")
