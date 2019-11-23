@@ -8,7 +8,7 @@
 
 import UIKit
 
-let SERVER_URL = "10.8.105.53"
+let SERVER_URL = "10.8.99.157"
 
 class tools: NSObject {
     let globalServerURL = SERVER_URL

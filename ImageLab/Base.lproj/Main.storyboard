@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--ModuleA-->
+        <!--Face Recognation-->
         <scene sceneID="fxX-NW-n83">
             <objects>
                 <viewController id="gBJ-Ga-IQM" customClass="ModuleAViewController" customModule="ImageLab" customModuleProvider="target" sceneMemberID="viewController">
@@ -49,7 +49,7 @@
                             <constraint firstItem="THe-KN-YCR" firstAttribute="centerX" secondItem="7aw-bQ-5L4" secondAttribute="centerX" id="xd5-DS-kyc"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="ModuleA" id="R6k-X3-ieb"/>
+                    <tabBarItem key="tabBarItem" title="Face Recognation" id="R6k-X3-ieb"/>
                     <connections>
                         <outlet property="resultLabel" destination="THe-KN-YCR" id="cx8-1w-GtJ"/>
                     </connections>
